@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class DetailBerita extends StatelessWidget {
   final uuid;
-
+  final String apiUrl = "https://bpkad.ntbrprov.go.id/api/berita/";
   DetailBerita({this.uuid});
 
-  // final String apiUrl = "https://bpkad.ntbprov.go.id/api/berita/";
+  Future<List<dynamic>> _fetchBerita() async {
+    var result = await http.get(Uri.parse(apiUrl, uuid));
+    return json.decode(result.body)['data'];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +30,7 @@ class DetailBerita extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  'title',
+                  'titles',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 10),
