@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pegawai/Archive/add_archive.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 void main() {
   runApp(Archive());
@@ -11,40 +13,41 @@ class Archive extends StatefulWidget {
 }
 
 class _ArchiveState extends State<Archive> {
-  final List archive = [
-    'dokumen 1',
-    'dokumen 2',
-    'dokumen 3',
-    'dokumen 4',
-    'dokumen 5',
-    'dokumen 6',
-    'dokumen 7',
-    'dokumen 8',
-    'dokumen 9',
-    'dokumen 10',
-    'dokumen 12',
-    'dokumen 13',
-    'dokumen 14',
-    'dokumen 15',
-    'dokumen 16',
-    'dokumen 17',
-  ];
+  final String apiUrl = "https://bpkad.ntbprov.go.id/api/kip";
+
+  Future<List<dynamic>> _fetchDataFile() async {
+    var file = await http.get(Uri.parse(apiUrl));
+    return json.decode(file.body)['data'];
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView.builder(
-        itemBuilder: (context, index) {
-          return Card(
-            child: ListTile(
-              title: Text(
-                archive[index],
-                style: TextStyle(fontSize: 30),
-              ),
-            ),
-          );
-        },
-        itemCount: archive.length,
+      body: Container(
+        child: FutureBuilder<List<dynamic>>(
+          future: _fetchDataFile(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.hasData) {
+              return ListView.builder(
+                  padding: EdgeInsets.all(10),
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(
+                      leading: CircleAvatar(
+                        child: Text(
+                          snapshot.data[index]['nama_informasi'][0]+""+snapshot.data[index]['nama_informasi'][2],
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ),
+                      title: Text(snapshot.data[index]['nama_informasi']),
+                      subtitle: Text("informasi "+snapshot.data[index]['jenis_informasi']+" - ["+snapshot.data[index]['tahun'].toString()+"]"),
+                    );
+                  });
+            } else {
+              return Center(child: CircularProgressIndicator());
+            }
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

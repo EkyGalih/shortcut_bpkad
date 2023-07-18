@@ -1,67 +1,67 @@
-import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:pegawai/Archive/add_archive.dart';
-import 'package:pegawai/Pegawai/add_pegawai.dart';
-import 'package:pegawai/nav-drawer.dart';
-import 'Pegawai/pegawai.dart';
-import 'Archive/archive.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:intl/intl.dart';
+import 'package:pegawai/berita/detail_berita.dart';
 
-void main() {
-  runApp(MyApp());
-}
+class Home extends StatelessWidget {
+  final String apiUrl = "https://bpkad.ntbprov.go.id/api/berita";
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Shortcut BPKAD",
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          primarySwatch: Colors.blue,
-          visualDensity: VisualDensity.adaptivePlatformDensity),
-      home: MyHomePage(),
-      initialRoute: '/',
-      routes: {
-        '/home': (context) => MyHomePage(),
-        '/pegawai': (context) => Pegawai(),
-        '/add_pegawai': (context) => AddPegawai(),
-        '/archive': (context) => Archive(),
-        '/add_archive': (context) => AddArchive(),
-      },
-    );
+  Future<List<dynamic>> _fetchDataBerita() async {
+    var result = await http.get(Uri.parse(apiUrl));
+    return json.decode(result.body)['data'];
   }
-}
-
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int selectedPage = 0;
-  final _pageOption = [MyHomePage(), Archive(), Pegawai()];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Shortcut BPKAD'),
-      ),
-      drawer: Sidebar(),
-      endDrawer: Sidebar(),
-      body: _pageOption[selectedPage],
-      bottomNavigationBar: ConvexAppBar(
-        items: [
-          TabItem(icon: Icons.home, title: "Home"),
-          TabItem(icon: Icons.archive, title: "Arsip"),
-          TabItem(icon: Icons.people, title: 'Pegawai')
-        ],
-        initialActiveIndex: selectedPage,
-        onTap: (int index) {
-          setState(() {
-            selectedPage = index;
-          });
-        },
+      body: Container(
+        margin: const EdgeInsets.all(5),
+        child: FutureBuilder<List<dynamic>>(
+          future: _fetchDataBerita(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.hasData) {
+              return ListView.builder(
+                itemCount: snapshot.data.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    leading: Container(
+                      color: Colors.grey[200],
+                      height: 100,
+                      width: 100,
+                      child: snapshot.data[index]['foto_berita'] != null
+                          ? Image.network(
+                              "https://bpkad.ntbprov.go.id/" +
+                                  snapshot.data[index]['foto_berita'],
+                              width: 100,
+                              fit: BoxFit.cover)
+                          : Center(),
+                    ),
+                    title: Text(
+                      snapshot.data[index]['title'],
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    subtitle: Text(
+                      snapshot.data[index]['content'],
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (c) => DetailBerita(
+                                  uuid: snapshot.data[index]['id'])));
+                    },
+                  );
+                },
+              );
+            } else {
+              return Center(child: CircularProgressIndicator());
+            }
+          },
+        ),
       ),
     );
   }
