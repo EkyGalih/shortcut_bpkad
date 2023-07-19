@@ -25,7 +25,6 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/pegawai': (context) => Pegawai(),
-        '/detail': (context) => DetailBerita(),
         '/add_pegawai': (context) => AddPegawai(),
         '/archive': (context) => Archive(),
         '/add_archive': (context) => AddArchive(),

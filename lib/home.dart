@@ -12,6 +12,11 @@ class Home extends StatelessWidget {
     return json.decode(result.body)['data'];
   }
 
+  String removeAllHtmlTags(String htmlText) {
+    RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
+    return htmlText.replaceAll(exp, '');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +48,7 @@ class Home extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     subtitle: Text(
-                      snapshot.data[index]['content'],
+                      removeAllHtmlTags(snapshot.data[index]['content']),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -52,7 +57,14 @@ class Home extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (c) => DetailBerita(
-                                  uuid: snapshot.data[index]['id'])));
+                                    id: snapshot.data[index]['id'],
+                                    publishedAt: snapshot.data[index]
+                                        ['created_at'],
+                                    title: snapshot.data[index]['title'],
+                                    content: snapshot.data[index]['content'],
+                                    image: snapshot.data[index]['foto_berita'],
+                                    author: snapshot.data[index]['users_id'],
+                                  )));
                     },
                   );
                 },
