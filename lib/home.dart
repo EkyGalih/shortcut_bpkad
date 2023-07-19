@@ -3,11 +3,14 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:pegawai/berita/detail_berita.dart';
+import 'package:pegawai/model/berita/berita_model.dart';
 
 class Home extends StatelessWidget {
+  // List<Berita> _list = [];
+  // List<Berita> _search = [];
   final String apiUrl = "https://bpkad.ntbprov.go.id/api/berita";
 
-  Future<List<dynamic>> _fetchDataBerita() async {
+  Future<List> _fetchDataBerita() async {
     var result = await http.get(Uri.parse(apiUrl));
     return json.decode(result.body)['data'];
   }
