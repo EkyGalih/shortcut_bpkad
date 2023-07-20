@@ -1,10 +1,9 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:pegawai/Archive/add_archive.dart';
-import 'package:pegawai/Pegawai/add_pegawai.dart';
-import 'package:pegawai/berita/detail_berita.dart';
-import 'package:pegawai/home.dart';
-import 'package:pegawai/nav-drawer.dart';
+import 'package:instabpkad/Archive/add_archive.dart';
+import 'package:instabpkad/Pegawai/add_pegawai.dart';
+import 'package:instabpkad/home.dart';
+import 'package:instabpkad/nav-drawer.dart';
 import 'Pegawai/pegawai.dart';
 import 'Archive/archive.dart';
 import 'package:http/http.dart' as http;

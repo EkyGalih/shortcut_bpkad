@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pegawai/Pegawai/add_pegawai.dart';
+import 'package:instabpkad/Pegawai/add_pegawai.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 

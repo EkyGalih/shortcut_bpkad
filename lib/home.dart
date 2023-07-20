@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart';
-import 'package:pegawai/berita/detail_berita.dart';
-import 'package:pegawai/model/berita/berita_model.dart';
+import 'package:instabpkad/berita/detail_berita.dart';
+import 'package:instabpkad/model/berita/berita_model.dart';
 
 class Home extends StatelessWidget {
   final String apiUrl = "https://bpkad.ntbprov.go.id/api/berita";

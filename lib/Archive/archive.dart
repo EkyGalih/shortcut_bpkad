@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pegawai/Archive/add_archive.dart';
+import 'package:instabpkad/Archive/add_archive.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -35,12 +35,18 @@ class _ArchiveState extends State<Archive> {
                     return ListTile(
                       leading: CircleAvatar(
                         child: Text(
-                          snapshot.data[index]['nama_informasi'][0]+""+snapshot.data[index]['nama_informasi'][2],
+                          snapshot.data[index]['nama_informasi'][0] +
+                              "" +
+                              snapshot.data[index]['nama_informasi'][2],
                           style: TextStyle(fontSize: 20),
                         ),
                       ),
                       title: Text(snapshot.data[index]['nama_informasi']),
-                      subtitle: Text("informasi "+snapshot.data[index]['jenis_informasi']+" - ["+snapshot.data[index]['tahun'].toString()+"]"),
+                      subtitle: Text("informasi " +
+                          snapshot.data[index]['jenis_informasi'] +
+                          " - [" +
+                          snapshot.data[index]['tahun'].toString() +
+                          "]"),
                     );
                   });
             } else {
