@@ -8,15 +8,16 @@ class DetailBerita extends StatelessWidget {
   final content;
   final author;
   final publishedAt;
+  final tags;
 
-  DetailBerita({
-    this.id = 0,
-    this.image,
-    this.title,
-    this.content,
-    this.author,
-    this.publishedAt,
-  });
+  DetailBerita(
+      {this.id = 0,
+      this.image,
+      this.title,
+      this.content,
+      this.author,
+      this.publishedAt,
+      this.tags});
 
   // hapus tag html pada tulisan content
   String removeAllHtmlTags(String htmlText) {
@@ -65,8 +66,8 @@ class DetailBerita extends StatelessWidget {
                   SizedBox(height: 5),
                   Text(removeAllHtmlTags(content)),
                   Divider(),
-                  Text('Author :' + author),
-                  Text('Sumber : bpkad.ntbprov.go.id/berita/detail/' + id),
+                  Text('Published By ' + author),
+                  Text(tags != null ? tags : "-"),
                 ],
               ),
             )

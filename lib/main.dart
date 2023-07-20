@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Shortcut BPKAD",
+      title: "Insta BPKAD",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           primarySwatch: Colors.blue,
@@ -46,9 +46,13 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Shortcut BPKAD'),
+        title: const Text(
+          'instabpkad',
+          style: TextStyle(fontFamily: 'OoohBaby', fontSize: 30),
+        ),
+        toolbarHeight: 45,
       ),
-      drawer: Sidebar(),
+      // drawer: Sidebar(),
       endDrawer: Sidebar(),
       body: _pageOption[selectedPage],
       bottomNavigationBar: ConvexAppBar(

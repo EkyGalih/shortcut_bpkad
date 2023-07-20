@@ -66,7 +66,8 @@ class Home extends StatelessWidget {
                                     title: snapshot.data[index]['title'],
                                     content: snapshot.data[index]['content'],
                                     image: snapshot.data[index]['foto_berita'],
-                                    author: snapshot.data[index]['users_id'],
+                                    author: snapshot.data[index]['author'],
+                                    tags: snapshot.data[index]['tags']
                                   )));
                     },
                   );
