@@ -1,4 +1,4 @@
-class Berita {
+class BeritaModel {
   final id;
   final image;
   final title;
@@ -6,7 +6,7 @@ class Berita {
   final author;
   final publishedAt;
 
-  Berita({
+  BeritaModel({
     this.id = 0,
     this.image,
     this.title,
@@ -15,13 +15,13 @@ class Berita {
     this.publishedAt,
   });
 
-  factory Berita.fromJson(Map<String, dynamic> json) {
-    return Berita(
-      id: json['id'],
-      image: json['image'],
-      title: json['title'],
-      content: json['content'],
-      author: json['author'],
-    );
-  }
+  // factory BeritaModel.fromJson(Map<String, dynamic> json) {
+  //   return BeritaModel(
+  //     id: json['id'],
+  //     image: json['image'],
+  //     title: json['title'],
+  //     content: json['content'],
+  //     author: json['author'],
+  //   );
+  // }
 }

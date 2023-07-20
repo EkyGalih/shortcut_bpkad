@@ -49,13 +49,13 @@ class _PegawaiState extends State<Pegawai> {
           },
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).pushNamed('/add_pegawai');
-        },
-        backgroundColor: Colors.blue,
-        child: const Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     Navigator.of(context).pushNamed('/add_pegawai');
+      //   },
+      //   backgroundColor: Colors.blue,
+      //   child: const Icon(Icons.add),
+      // ),
     );
   }
 }

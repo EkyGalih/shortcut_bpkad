@@ -49,13 +49,13 @@ class _ArchiveState extends State<Archive> {
           },
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).pushNamed('/add_archive');
-        },
-        backgroundColor: Colors.blue,
-        child: const Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     Navigator.of(context).pushNamed('/add_archive');
+      //   },
+      //   backgroundColor: Colors.blue,
+      //   child: const Icon(Icons.add),
+      // ),
     );
   }
 }

@@ -7,6 +7,8 @@ import 'package:pegawai/home.dart';
 import 'package:pegawai/nav-drawer.dart';
 import 'Pegawai/pegawai.dart';
 import 'Archive/archive.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 void main() {
   runApp(MyApp());
@@ -48,7 +50,10 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: const Text(
           'instabpkad',
-          style: TextStyle(fontFamily: 'OoohBaby', fontSize: 30),
+          style: TextStyle(
+            fontFamily: 'OoohBaby',
+            fontSize: 30,
+          ),
         ),
         toolbarHeight: 45,
       ),
