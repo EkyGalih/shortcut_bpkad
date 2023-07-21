@@ -2,12 +2,13 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:instabpkad/Archive/add_archive.dart';
 import 'package:instabpkad/Pegawai/add_pegawai.dart';
+import 'package:instabpkad/berita/berita.dart';
 import 'package:instabpkad/home.dart';
+import 'package:instabpkad/model/berita/berita_model.dart';
 import 'package:instabpkad/nav-drawer.dart';
 import 'Pegawai/pegawai.dart';
 import 'Archive/archive.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:instabpkad/api/berita_api.dart';
 
 void main() {
   runApp(MyApp());
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/pegawai': (context) => Pegawai(),
+        '/berita': (context) => Berita(),
         '/add_pegawai': (context) => AddPegawai(),
         '/archive': (context) => Archive(),
         '/add_archive': (context) => AddArchive(),
@@ -41,7 +43,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int selectedPage = 0;
-  final _pageOption = [Home(), Archive(), Pegawai()];
+  final _pageOption = [Home(), Berita(), Archive(), Pegawai()];
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: ConvexAppBar(
         items: const [
           TabItem(icon: Icons.home, title: "Home"),
+          TabItem(icon: Icons.newspaper, title: "Berita"),
           TabItem(icon: Icons.archive, title: "Arsip"),
           TabItem(icon: Icons.people, title: 'Pegawai')
         ],

@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:intl/intl.dart';
-import 'package:instabpkad/berita/detail_berita.dart';
+import 'package:instabpkad/api/berita_api.dart';
 import 'package:instabpkad/model/berita/berita_model.dart';
+import 'package:intl/intl.dart';
 
-class Home extends StatelessWidget {
-  final String apiUrl = "https://bpkad.ntbprov.go.id/api/berita";
+class Home extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
 
-  Future<List> _fetchDataBerita() async {
-    var result = await http.get(Uri.parse(apiUrl));
-    return json.decode(result.body)['data'];
+class _HomePageState extends State<Home> {
+  late Future<List<BeritaModel>> daftarBerita;
+
+  @override
+  void initState() {
+    super.initState();
+    daftarBerita = BeritaService().getBerita();
   }
 
   String removeAllHtmlTags(String htmlText) {
@@ -28,92 +32,38 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // const Text(
-          //   "Cari Berita",
-          //   style: TextStyle(
-          //       color: Colors.black,
-          //       fontSize: 14.0,
-          //       fontWeight: FontWeight.bold),
-          // ),
-          // const SizedBox(
-          //   height: 8.0,
-          // ),
-          TextField(
-            style: const TextStyle(color: Colors.black),
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: const Color.fromARGB(255, 204, 202, 202),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8.0),
-                borderSide: BorderSide.none,
-              ),
-              hintText: "Cari Berita",
-              prefixIcon: const Icon(Icons.search),
-              prefixIconColor: Colors.blue.shade900,
-            ),
-          ),
-          const SizedBox(
-            height: 20.0,
-          ),
-          Expanded(
-            child: FutureBuilder<List<dynamic>>(
-              future: _fetchDataBerita(),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.hasData) {
-                  return ListView.builder(
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (context, index) => ListTile(
-                      title: Text(
-                        snapshot.data[index]['title'],
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
+      body: Container(
+          height: 230,
+          child: FutureBuilder<List<BeritaModel>>(
+            future: daftarBerita,
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.hasData) {
+                return ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: snapshot.data.length,
+                  separatorBuilder: (context, _) => const SizedBox(width: 12),
+                  itemBuilder: (context, index) {
+                    return Card(
+                      child: Container(
+                        width: 100,
+                        height: 100,
+                        color: Colors.blue,
+                        child: Column(
+                          children: [
+                            Image.network(
+                                "https://bpkad.ntbprov.go.id/uploads/berita/berita-6b035225d5119410048a5933089e527d.jpeg"),
+                            Text(snapshot.data.title)
+                          ],
                         ),
                       ),
-                      subtitle: Text(
-                        // removeAllHtmlTags(snapshot.data[index]['content']),
-                        "By " + snapshot.data[index]['author'],
-                        style: const TextStyle(
-                          color: Colors.black,
-                        ),
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (c) => DetailBerita(
-                                    id: snapshot.data[index]['id'],
-                                    publishedAt: snapshot.data[index]
-                                        ['created_at'],
-                                    title: snapshot.data[index]['title'],
-                                    content: snapshot.data[index]['content'],
-                                    image: snapshot.data[index]['foto_berita'],
-                                    author: snapshot.data[index]['author'],
-                                    tags: snapshot.data[index]['tags'])));
-                      },
-                      // trailing: Text(
-                      //   getCustomFormattedDateTime(
-                      //       snapshot.data[index]['created_at'], "MM/dd/yyyy"),
-                      //   style: TextStyle(color: Colors.amber),
-                      // ),
-                      leading: Image.network("https://bpkad.ntbprov.go.id/" +
-                          snapshot.data[index]['foto_berita']),
-                    ),
-                  );
-                } else {
-                  return Center(child: CircularProgressIndicator());
-                }
-              },
-            ),
-          ),
-        ],
-      ),
-    ));
+                    );
+                  },
+                );
+              } else {
+                return Center(child: CircularProgressIndicator());
+              }
+            },
+          )),
+    );
   }
 }
