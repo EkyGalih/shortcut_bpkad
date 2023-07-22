@@ -7,6 +7,7 @@ class BeritaModel {
   final content;
   final author;
   final publishedAt;
+  final tag;
 
   BeritaModel({
     required this.id,
@@ -15,16 +16,18 @@ class BeritaModel {
     required this.content,
     required this.author,
     required this.publishedAt,
+    required this.tag,
   });
 
   factory BeritaModel.fromJson(Map<String, dynamic> map) {
     return BeritaModel(
       id: map['id'],
-      image: map['image'],
+      image: map['foto_berita'],
       title: map['title'],
       content: map['content'],
       author: map['author'],
-      publishedAt: map['publishedAt'],
+      publishedAt: map['created_at'],
+      tag: map['tags'],
     );
   }
 
@@ -36,12 +39,13 @@ class BeritaModel {
       "content": content,
       "author": author,
       "publishedAt": publishedAt,
+      "tag": tag,
     };
   }
 
   @override
   String toString() {
-    return 'BeritaModel{id: $id, image: $image, title: $title, content: $content, author: $author, publihedAt: $publishedAt}';
+    return 'BeritaModel{id: $id, image: $image, title: $title, content: $content, author: $author, publihedAt: $publishedAt, tag: $tag}';
   }
 }
 

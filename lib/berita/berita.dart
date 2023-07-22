@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:instabpkad/api/berita_api.dart';
 import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:instabpkad/berita/detail_berita.dart';
 import 'package:instabpkad/model/berita/berita_model.dart';
 
-class Berita extends StatelessWidget {
-  final String apiUrl = "https://bpkad.ntbprov.go.id/api/berita";
+class Berita extends StatefulWidget {
+  @override
+  _BeritaPageState createState() => _BeritaPageState();
+}
 
-  Future<List> _fetchDataBerita() async {
-    var result = await http.get(Uri.parse(apiUrl));
-    return json.decode(result.body)['data'];
+class _BeritaPageState extends State<Berita> {
+  late Future<List<BeritaModel>> daftarBerita;
+
+  @override
+  void initState() {
+    super.initState();
+    daftarBerita = BeritaService().getBerita();
   }
 
   String removeAllHtmlTags(String htmlText) {
@@ -62,15 +69,15 @@ class Berita extends StatelessWidget {
             height: 20.0,
           ),
           Expanded(
-            child: FutureBuilder<List<dynamic>>(
-              future: _fetchDataBerita(),
+            child: FutureBuilder<List<BeritaModel>>(
+              future: daftarBerita,
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData) {
                   return ListView.builder(
                     itemCount: snapshot.data.length,
                     itemBuilder: (context, index) => ListTile(
                       title: Text(
-                        snapshot.data[index]['title'],
+                        snapshot.data[index].title,
                         style: const TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
@@ -78,7 +85,7 @@ class Berita extends StatelessWidget {
                       ),
                       subtitle: Text(
                         // removeAllHtmlTags(snapshot.data[index]['content']),
-                        "By " + snapshot.data[index]['author'],
+                        "By " + snapshot.data[index].author,
                         style: const TextStyle(
                           color: Colors.black,
                         ),
@@ -88,14 +95,14 @@ class Berita extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (c) => DetailBerita(
-                                    id: snapshot.data[index]['id'],
-                                    publishedAt: snapshot.data[index]
-                                        ['created_at'],
-                                    title: snapshot.data[index]['title'],
-                                    content: snapshot.data[index]['content'],
-                                    image: snapshot.data[index]['foto_berita'],
-                                    author: snapshot.data[index]['author'],
-                                    tags: snapshot.data[index]['tags'])));
+                                    id: snapshot.data[index].id,
+                                    publishedAt:
+                                        snapshot.data[index].publishedAt,
+                                    title: snapshot.data[index].title,
+                                    content: snapshot.data[index].content,
+                                    image: snapshot.data[index].image,
+                                    author: snapshot.data[index].author,
+                                    tags: snapshot.data[index].tag)));
                       },
                       // trailing: Text(
                       //   getCustomFormattedDateTime(
@@ -103,7 +110,7 @@ class Berita extends StatelessWidget {
                       //   style: TextStyle(color: Colors.amber),
                       // ),
                       leading: Image.network("https://bpkad.ntbprov.go.id/" +
-                          snapshot.data[index]['foto_berita']),
+                          snapshot.data[index].image),
                     ),
                   );
                 } else {

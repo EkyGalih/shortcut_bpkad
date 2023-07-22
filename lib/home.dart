@@ -40,19 +40,40 @@ class _HomePageState extends State<Home> {
               if (snapshot.hasData) {
                 return ListView.separated(
                   scrollDirection: Axis.horizontal,
-                  itemCount: snapshot.data.length,
+                  itemCount: 5,
                   separatorBuilder: (context, _) => const SizedBox(width: 12),
                   itemBuilder: (context, index) {
                     return Card(
                       child: Container(
-                        width: 100,
-                        height: 100,
-                        color: Colors.blue,
+                        width: 200,
+                        // height: 200,
+                        // color: Colors.blue,
                         child: Column(
                           children: [
-                            Image.network(
-                                "https://bpkad.ntbprov.go.id/uploads/berita/berita-6b035225d5119410048a5933089e527d.jpeg"),
-                            Text(snapshot.data.title)
+                            Expanded(
+                              child: AspectRatio(
+                                aspectRatio: 4 / 3,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Image.network(
+                                    "https://bpkad.ntbprov.go.id/" +
+                                        snapshot.data[index].image,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              snapshot.data[index].title,
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              "By " + snapshot.data[index].author,
+                              style: TextStyle(
+                                  fontSize: 12, color: Colors.black54),
+                            )
                           ],
                         ),
                       ),
