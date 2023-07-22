@@ -8,7 +8,6 @@ import 'package:instabpkad/model/berita/berita_model.dart';
 import 'package:instabpkad/nav-drawer.dart';
 import 'Pegawai/pegawai.dart';
 import 'Archive/archive.dart';
-import 'package:instabpkad/api/berita_api.dart';
 
 void main() {
   runApp(MyApp());
