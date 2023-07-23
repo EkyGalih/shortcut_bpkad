@@ -10,8 +10,9 @@ class DetailBerita extends StatelessWidget {
   final publishedAt;
   final tags;
 
-  DetailBerita(
-      {this.id = 0,
+  const DetailBerita(
+      {super.key,
+      this.id = 0,
       this.image,
       this.title,
       this.content,
@@ -43,10 +44,10 @@ class DetailBerita extends StatelessWidget {
         child: Column(
           children: <Widget>[
             image != null
-                ? Image.network("https://bpkad.ntbprov.go.id/" + image)
-                : Container(
+                ? Image.network("https://bpkad.ntbprov.go.id/$image")
+                : SizedBox(
                     height: 250,
-                    color: Colors.grey[200],
+                    child: Image.asset('assets/images/newsfeed.png'),
                   ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -55,19 +56,28 @@ class DetailBerita extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     title,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),
                   Text(
                     getCustomFormattedDateTime(publishedAt, 'MM/dd/yyyy'),
-                    style: TextStyle(fontStyle: FontStyle.italic),
+                    style: const TextStyle(fontStyle: FontStyle.italic),
                   ),
-                  Divider(),
-                  SizedBox(height: 5),
+                  Text('By  $author',
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic)),
+                  const Divider(),
+                  const SizedBox(height: 5),
                   Text(removeAllHtmlTags(content)),
-                  Divider(),
-                  Text('Published By ' + author),
-                  Text(tags != null ? tags : "-"),
+                  const Divider(),
+                  Text(
+                    tags ?? "-",
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w300,
+                        fontStyle: FontStyle.italic),
+                  ),
                 ],
               ),
             )

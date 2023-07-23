@@ -22,37 +22,35 @@ class _ArchiveState extends State<Archive> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: FutureBuilder<List<dynamic>>(
-          future: _fetchDataFile(),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.hasData) {
-              return ListView.builder(
-                  padding: EdgeInsets.all(10),
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ListTile(
-                      leading: CircleAvatar(
-                        child: Text(
-                          snapshot.data[index]['nama_informasi'][0] +
-                              "" +
-                              snapshot.data[index]['nama_informasi'][2],
-                          style: TextStyle(fontSize: 20),
-                        ),
+      body: FutureBuilder<List<dynamic>>(
+        future: _fetchDataFile(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+                padding: const EdgeInsets.all(10),
+                itemCount: snapshot.data.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ListTile(
+                    leading: CircleAvatar(
+                      child: Text(
+                        snapshot.data[index]['nama_informasi'][0] +
+                            "" +
+                            snapshot.data[index]['nama_informasi'][2],
+                        style: const TextStyle(fontSize: 20),
                       ),
-                      title: Text(snapshot.data[index]['nama_informasi']),
-                      subtitle: Text("informasi " +
-                          snapshot.data[index]['jenis_informasi'] +
-                          " - [" +
-                          snapshot.data[index]['tahun'].toString() +
-                          "]"),
-                    );
-                  });
-            } else {
-              return Center(child: CircularProgressIndicator());
-            }
-          },
-        ),
+                    ),
+                    title: Text(snapshot.data[index]['nama_informasi']),
+                    subtitle: Text("informasi " +
+                        snapshot.data[index]['jenis_informasi'] +
+                        " - [" +
+                        snapshot.data[index]['tahun'].toString() +
+                        "]"),
+                  );
+                });
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        },
       ),
       // floatingActionButton: FloatingActionButton(
       //   onPressed: () {

@@ -5,7 +5,10 @@ import 'package:instabpkad/berita/detail_berita.dart';
 import 'package:instabpkad/model/berita/berita_model.dart';
 
 class Berita extends StatefulWidget {
+  const Berita({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _BeritaPageState createState() => _BeritaPageState();
 }
 
@@ -86,7 +89,7 @@ class _BeritaPageState extends State<Berita> {
                           ),
                           subtitle: Text(
                             // removeAllHtmlTags(snapshot.data[index]['content']),
-                            "By " + snapshot.data[index].author,
+                            "By ${snapshot.data[index].author}",
                             style: const TextStyle(
                               color: Colors.black,
                             ),
@@ -116,7 +119,7 @@ class _BeritaPageState extends State<Berita> {
                               "https://bpkad.ntbprov.go.id/${snapshot.data[index].image}")),
                     );
                   } else {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   }
                 },
               ),

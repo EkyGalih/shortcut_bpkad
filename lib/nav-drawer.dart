@@ -24,9 +24,9 @@ class Sidebar extends StatelessWidget {
               icon: Icons.delete,
               text: 'Trash',
               onTap: () => print('Tap Trash menu')),
-          Divider(height: 25, thickness: 1),
-          Padding(
-            padding: const EdgeInsets.only(left: 20.0, top: 10, bottom: 10),
+          const Divider(height: 25, thickness: 1),
+          const Padding(
+            padding: EdgeInsets.only(left: 20.0, top: 10, bottom: 10),
             child: Text("Labels",
                 style: TextStyle(
                   fontSize: 16,
@@ -43,7 +43,7 @@ class Sidebar extends StatelessWidget {
   }
 
   Widget _drawerHeader() {
-    return UserAccountsDrawerHeader(
+    return const UserAccountsDrawerHeader(
       currentAccountPicture: ClipOval(
         child: Image(
             image: AssetImage('assets/images/male.jpg'), fit: BoxFit.cover),
@@ -60,10 +60,10 @@ class Sidebar extends StatelessWidget {
         children: <Widget>[
           Icon(icon),
           Padding(
-            padding: EdgeInsets.only(left: 25.0),
+            padding: const EdgeInsets.only(left: 25.0),
             child: Text(
               text,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
         ],

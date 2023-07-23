@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
 
-
 class AddArchive extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
+
+  AddArchive({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Tambah Archive"),
+        title: const Text("Tambah Archive"),
       ),
       body: Form(
         key: _formKey,
         child: Container(
-          padding: EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
               TextFormField(
-                decoration: new InputDecoration(
+                decoration: InputDecoration(
                   hintText: "masukkan jenis file",
                   labelText: "Nama File",
-                  icon: Icon(Icons.file_upload),
+                  icon: const Icon(Icons.file_upload),
                   border: OutlineInputBorder(
-                    borderRadius: new BorderRadius.circular(5.0)
-                  ),
+                      borderRadius: BorderRadius.circular(5.0)),
                 ),
               )
             ],
