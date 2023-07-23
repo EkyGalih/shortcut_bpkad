@@ -7,12 +7,15 @@ import 'package:instabpkad/model/berita/berita_model.dart';
 import 'package:intl/intl.dart';
 
 class Home extends StatefulWidget {
+  const Home({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<Home> {
-  late Future<List<BeritaModel>> daftarBerita;
+  late Future<List<BeritaModel>> carouselBerita;
   late final PageController pageController;
   int pageNo = 0;
 
@@ -36,7 +39,7 @@ class _HomePageState extends State<Home> {
 
   @override
   void initState() {
-    daftarBerita = BeritaService().getBerita();
+    carouselBerita = BeritaService().getBerita();
     pageController = PageController(initialPage: 0, viewportFraction: 0.85);
     caraouselTimer = getTimer();
     super.initState();
@@ -62,7 +65,7 @@ class _HomePageState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    // BeritaService().getBerita().then((value) => print("value: $value"));
+    BeritaService().getBerita().then((value) => print("value: $value"));
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -90,12 +93,12 @@ class _HomePageState extends State<Home> {
             Container(
               height: 200,
               child: FutureBuilder<List<BeritaModel>>(
-                  future: daftarBerita,
+                  future: carouselBerita,
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     return PageView.builder(
                       controller: pageController,
-                      onPageChanged: (index) {
-                        pageNo = index;
+                      onPageChanged: (idx) {
+                        pageNo = idx;
                         setState(() {});
                       },
                       itemBuilder: (context, index) {
@@ -125,19 +128,19 @@ class _HomePageState extends State<Home> {
                               //   ),
                               // );
                             },
-                            onPanDown: (d) {
-                              caraouselTimer?.cancel();
-                              caraouselTimer = null;
-                            },
-                            onPanCancel: () {
-                              caraouselTimer = getTimer();
-                            },
+                            // onPanDown: (d) {
+                            //   caraouselTimer?.cancel();
+                            //   caraouselTimer = null;
+                            // },
+                            // onPanCancel: () {
+                            //   caraouselTimer = getTimer();
+                            // },
                             child: Container(
                               margin: const EdgeInsets.only(
                                   right: 8, left: 8, top: 1, bottom: 5),
                               // height: 180,
                               child: Image.network(
-                                "https://bpkad.ntbprov.go.id/${snapshot.data[index].image}",
+                                "https://bpkad.ntbprov.go.id/uploads/berita/berita-6820d13b719c973b854eb810e9e00a7f.jpeg",
                                 fit: BoxFit.fill,
                               ),
                             ),

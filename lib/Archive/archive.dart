@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:instabpkad/api/archive_api.dart';
+
+import 'package:instabpkad/model/archive/archive_model.dart';
 
 void main() {
   runApp(Archive());
@@ -12,18 +13,19 @@ class Archive extends StatefulWidget {
 }
 
 class _ArchiveState extends State<Archive> {
-  final String apiUrl = "https://bpkad.ntbprov.go.id/api/kip";
+  late Future<List<ArchiveModel>> daftarArchive;
 
-  Future<List<dynamic>> _fetchDataFile() async {
-    var file = await http.get(Uri.parse(apiUrl));
-    return json.decode(file.body)['data'];
+  @override
+  void initState() {
+    super.initState();
+    daftarArchive = ArchiveService().getArchive();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder<List<dynamic>>(
-        future: _fetchDataFile(),
+        future: daftarArchive,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
@@ -31,20 +33,20 @@ class _ArchiveState extends State<Archive> {
                 itemCount: snapshot.data.length,
                 itemBuilder: (BuildContext context, int index) {
                   return ListTile(
-                    leading: CircleAvatar(
-                      child: Text(
-                        snapshot.data[index]['nama_informasi'][0] +
-                            "" +
-                            snapshot.data[index]['nama_informasi'][2],
-                        style: const TextStyle(fontSize: 20),
-                      ),
+                    leading:
+                        const CircleAvatar(child: Icon(Icons.file_present)),
+                    title: Text(snapshot.data[index].nama),
+                    subtitle: Text(
+                      "Informasi ${snapshot.data[index].jenis} (${snapshot.data[index].tahun})"
+                          .toString(),
                     ),
-                    title: Text(snapshot.data[index]['nama_informasi']),
-                    subtitle: Text("informasi " +
-                        snapshot.data[index]['jenis_informasi'] +
-                        " - [" +
-                        snapshot.data[index]['tahun'].toString() +
-                        "]"),
+                    onTap: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("${snapshot.data[index].nama}"),
+                        ),
+                      );
+                    },
                   );
                 });
           } else {

@@ -1,4 +1,4 @@
-com.example.pegawai
+com.example.insta_bpkad
 attr activityAction
 attr activityName
 attr alpha
