@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:instabpkad/api/berita_api.dart';
 import 'package:instabpkad/berita/detail_berita.dart';
@@ -11,11 +13,37 @@ class Home extends StatefulWidget {
 
 class _HomePageState extends State<Home> {
   late Future<List<BeritaModel>> daftarBerita;
+  late final PageController pageController;
+  int pageNo = 0;
+
+  Timer? caraouselTimer;
+
+  Timer getTimer() {
+    return Timer.periodic(const Duration(seconds: 3), (timer) {
+      if (pageNo == 4) {
+        pageNo = 0;
+      }
+      pageController.animateToPage(
+        pageNo,
+        duration: const Duration(seconds: 1),
+        curve: Curves.easeInOutCirc,
+      );
+      pageNo++;
+    });
+  }
 
   @override
   void initState() {
-    super.initState();
     daftarBerita = BeritaService().getBerita();
+    pageController = PageController(initialPage: 0, viewportFraction: 0.85);
+    caraouselTimer = getTimer();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
   }
 
   String removeAllHtmlTags(String htmlText) {
@@ -33,112 +61,92 @@ class _HomePageState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          TextButton(
-            onPressed: () {
-              // Navigator.pushNamed(context, '/berita');
-            },
-            child: Container(
-              padding: const EdgeInsets.only(top: 12, bottom: 10),
-              child: Row(
-                children: [
-                  const Align(alignment: Alignment.centerLeft),
-                  Container(
+      body: SafeArea(
+        child: Column(
+          children: [
+            TextButton(
+              onPressed: () {
+                // Navigator.pushNamed(context, '/berita');
+              },
+              child: Container(
+                padding: const EdgeInsets.only(top: 12, bottom: 10),
+                child: Row(
+                  children: [
+                    const Align(alignment: Alignment.centerLeft),
+                    Container(
                       margin: const EdgeInsets.only(left: 10.0),
                       child: const Text(
                         "Semua Berita",
                         style: TextStyle(fontSize: 14.0),
-                      ))
-                ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          SizedBox(
-            height: 230,
-            child: FutureBuilder<List<BeritaModel>>(
-              future: daftarBerita,
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.hasData) {
-                  return ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 5,
-                    separatorBuilder: (context, _) => const SizedBox(width: 12),
-                    itemBuilder: (context, index) {
-                      return Card(
-                        child: SizedBox(
-                          width: 200,
-                          // height: 200,
-                          // color: Colors.blue,
-                          child: Column(
-                            children: [
-                              Expanded(
-                                child: AspectRatio(
-                                  aspectRatio: 4 / 3,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(20),
-                                    child: Material(
-                                      child: Ink.image(
-                                        image: NetworkImage(
-                                            'https://bpkad.ntbprov.go.id/${snapshot.data[index].image}'),
-                                        fit: BoxFit.cover,
-                                        child: InkWell(
-                                          onTap: () => Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      DetailBerita(
-                                                          id: snapshot
-                                                              .data[index].id,
-                                                          publishedAt: snapshot
-                                                              .data[index]
-                                                              .publishedAt,
-                                                          title: snapshot
-                                                              .data[index]
-                                                              .title,
-                                                          content: snapshot
-                                                              .data[index]
-                                                              .content,
-                                                          image: snapshot
-                                                              .data[index]
-                                                              .image,
-                                                          author: snapshot
-                                                              .data[index]
-                                                              .author,
-                                                          tags: snapshot
-                                                              .data[index]
-                                                              .tag))),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 2),
-                              Text(
-                                snapshot.data[index].title,
-                                style: const TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                "By ${snapshot.data[index].author}",
-                                style: const TextStyle(
-                                    fontSize: 12, color: Colors.black54),
-                              )
-                            ],
-                          ),
-                        ),
-                      );
+            SizedBox(
+              height: 200,
+              child: PageView.builder(
+                controller: pageController,
+                onPageChanged: (index) {
+                  pageNo = index;
+                  setState(() {});
+                },
+                itemBuilder: (_, index) {
+                  return AnimatedBuilder(
+                    animation: pageController,
+                    builder: (ctx, child) {
+                      return child!;
                     },
+                    child: GestureDetector(
+                      onTap: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("hallo anda menekan ${index + 1}"),
+                          ),
+                        );
+                      },
+                      onPanDown: (d) {
+                        caraouselTimer?.cancel();
+                        caraouselTimer = null;
+                      },
+                      onPanCancel: () {
+                        caraouselTimer = getTimer();
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.only(
+                            right: 8, left: 8, top: 1, bottom: 5),
+                        // height: 180,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(24.0),
+                          color: Colors.amberAccent,
+                        ),
+                      ),
+                    ),
                   );
-                } else {
-                  return const Center(child: CircularProgressIndicator());
-                }
-              },
+                },
+                itemCount: 5,
+              ),
             ),
-          ),
-          const Divider(),
-        ],
+            const SizedBox(height: 12.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                5,
+                (index) => Container(
+                  margin: const EdgeInsets.all(4.0),
+                  child: Icon(
+                    Icons.circle,
+                    size: 12.0,
+                    color: pageNo == index
+                        ? Colors.indigoAccent
+                        : Colors.grey.shade300,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
