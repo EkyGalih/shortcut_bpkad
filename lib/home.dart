@@ -23,11 +23,13 @@ class _HomePageState extends State<Home> {
       if (pageNo == 4) {
         pageNo = 0;
       }
-      pageController.animateToPage(
-        pageNo,
-        duration: const Duration(seconds: 1),
-        curve: Curves.easeInOutCirc,
-      );
+      if (pageController.hasClients) {
+        pageController.animateToPage(
+          pageNo,
+          duration: const Duration(seconds: 1),
+          curve: Curves.easeInOutCirc,
+        );
+      }
       pageNo++;
     });
   }
@@ -60,6 +62,7 @@ class _HomePageState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    // BeritaService().getBerita().then((value) => print("value: $value"));
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -84,49 +87,66 @@ class _HomePageState extends State<Home> {
                 ),
               ),
             ),
-            SizedBox(
+            Container(
               height: 200,
-              child: PageView.builder(
-                controller: pageController,
-                onPageChanged: (index) {
-                  pageNo = index;
-                  setState(() {});
-                },
-                itemBuilder: (_, index) {
-                  return AnimatedBuilder(
-                    animation: pageController,
-                    builder: (ctx, child) {
-                      return child!;
-                    },
-                    child: GestureDetector(
-                      onTap: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text("hallo anda menekan ${index + 1}"),
+              child: FutureBuilder<List<BeritaModel>>(
+                  future: daftarBerita,
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    return PageView.builder(
+                      controller: pageController,
+                      onPageChanged: (index) {
+                        pageNo = index;
+                        setState(() {});
+                      },
+                      itemBuilder: (context, index) {
+                        return AnimatedBuilder(
+                          animation: pageController,
+                          builder: (ctx, child) {
+                            return child!;
+                          },
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (c) => DetailBerita(
+                                          id: snapshot.data[index].id,
+                                          publishedAt:
+                                              snapshot.data[index].publishedAt,
+                                          title: snapshot.data[index].title,
+                                          content: snapshot.data[index].content,
+                                          image: snapshot.data[index].image,
+                                          author: snapshot.data[index].author,
+                                          tags: snapshot.data[index].tag)));
+                              // ScaffoldMessenger.of(context).showSnackBar(
+                              //   SnackBar(
+                              //     content:
+                              //         Text("${snapshot.data[index].title}"),
+                              //   ),
+                              // );
+                            },
+                            onPanDown: (d) {
+                              caraouselTimer?.cancel();
+                              caraouselTimer = null;
+                            },
+                            onPanCancel: () {
+                              caraouselTimer = getTimer();
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.only(
+                                  right: 8, left: 8, top: 1, bottom: 5),
+                              // height: 180,
+                              child: Image.network(
+                                "https://bpkad.ntbprov.go.id/${snapshot.data[index].image}",
+                                fit: BoxFit.fill,
+                              ),
+                            ),
                           ),
                         );
                       },
-                      onPanDown: (d) {
-                        caraouselTimer?.cancel();
-                        caraouselTimer = null;
-                      },
-                      onPanCancel: () {
-                        caraouselTimer = getTimer();
-                      },
-                      child: Container(
-                        margin: const EdgeInsets.only(
-                            right: 8, left: 8, top: 1, bottom: 5),
-                        // height: 180,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(24.0),
-                          color: Colors.amberAccent,
-                        ),
-                      ),
-                    ),
-                  );
-                },
-                itemCount: 5,
-              ),
+                      itemCount: 5,
+                    );
+                  }),
             ),
             const SizedBox(height: 12.0),
             Row(
