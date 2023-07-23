@@ -4,7 +4,6 @@ import 'package:instabpkad/Archive/add_archive.dart';
 import 'package:instabpkad/Pegawai/add_pegawai.dart';
 import 'package:instabpkad/berita/berita.dart';
 import 'package:instabpkad/home.dart';
-import 'package:instabpkad/model/berita/berita_model.dart';
 import 'package:instabpkad/nav-drawer.dart';
 import 'Pegawai/pegawai.dart';
 import 'Archive/archive.dart';

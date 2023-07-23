@@ -224,6 +224,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "smartrefresh",
+      "rootUri": "file:///C:/Users/BPKAD%20NTB/AppData/Local/Pub/Cache/hosted/pub.dev/smartrefresh-0.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
       "name": "source_span",
       "rootUri": "file:///C:/Users/BPKAD%20NTB/AppData/Local/Pub/Cache/hosted/pub.dev/source_span-1.9.1",
       "packageUri": "lib/",
@@ -290,7 +296,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2023-07-22T05:00:53.285033Z",
+  "generated": "2023-07-22T14:54:32.857797Z",
   "generator": "pub",
   "generatorVersion": "3.0.6"
 }

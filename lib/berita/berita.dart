@@ -33,6 +33,9 @@ class _BeritaPageState extends State<Berita> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 0,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -74,44 +77,43 @@ class _BeritaPageState extends State<Berita> {
                     return ListView.builder(
                       itemCount: snapshot.data.length,
                       itemBuilder: (context, index) => ListTile(
-                        title: Text(
-                          snapshot.data[index].title,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
+                          title: Text(
+                            snapshot.data[index].title,
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        subtitle: Text(
-                          // removeAllHtmlTags(snapshot.data[index]['content']),
-                          "By " + snapshot.data[index].author,
-                          style: const TextStyle(
-                            color: Colors.black,
+                          subtitle: Text(
+                            // removeAllHtmlTags(snapshot.data[index]['content']),
+                            "By " + snapshot.data[index].author,
+                            style: const TextStyle(
+                              color: Colors.black,
+                            ),
                           ),
-                        ),
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (c) => DetailBerita(
-                                      id: snapshot.data[index].id,
-                                      publishedAt:
-                                          snapshot.data[index].publishedAt,
-                                      title: snapshot.data[index].title,
-                                      content: snapshot.data[index].content,
-                                      image: snapshot.data[index].image,
-                                      author: snapshot.data[index].author,
-                                      tags: snapshot.data[index].tag)));
-                        },
-                        // trailing: Text(
-                        //   getCustomFormattedDateTime(
-                        //       snapshot.data[index]['created_at'], "MM/dd/yyyy"),
-                        //   style: TextStyle(color: Colors.amber),
-                        // ),
-                        // leading: Image.network("https://bpkad.ntbprov.go.id/" +
-                        //     snapshot.data[index].image),
-                        leading: Image(
-                            image: AssetImage('assets/images/newsfeed.png')),
-                      ),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (c) => DetailBerita(
+                                        id: snapshot.data[index].id,
+                                        publishedAt:
+                                            snapshot.data[index].publishedAt,
+                                        title: snapshot.data[index].title,
+                                        content: snapshot.data[index].content,
+                                        image: snapshot.data[index].image,
+                                        author: snapshot.data[index].author,
+                                        tags: snapshot.data[index].tag)));
+                          },
+                          // trailing: Text(
+                          //   getCustomFormattedDateTime(
+                          //       snapshot.data[index]['created_at'], "MM/dd/yyyy"),
+                          //   style: TextStyle(color: Colors.amber),
+                          // ),
+                          // leading: Image.network("https://bpkad.ntbprov.go.id/" +
+                          //     snapshot.data[index].image),
+                          leading: Image.network(
+                              "https://bpkad.ntbprov.go.id/${snapshot.data[index].image}")),
                     );
                   } else {
                     return Center(child: CircularProgressIndicator());
