@@ -39,10 +39,10 @@ class _HomePageState extends State<Home> {
 
   @override
   void initState() {
+    super.initState();
     carouselBerita = BeritaService().getBerita();
     pageController = PageController(initialPage: 0, viewportFraction: 0.85);
     caraouselTimer = getTimer();
-    super.initState();
   }
 
   @override
@@ -65,7 +65,7 @@ class _HomePageState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    BeritaService().getBerita().then((value) => print("value: $value"));
+    // BeritaService().getBerita().then((value) => print("value: $value"));
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -90,7 +90,7 @@ class _HomePageState extends State<Home> {
                 ),
               ),
             ),
-            Container(
+            SizedBox(
               height: 200,
               child: FutureBuilder<List<BeritaModel>>(
                   future: carouselBerita,

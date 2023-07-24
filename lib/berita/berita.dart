@@ -21,6 +21,8 @@ class _BeritaPageState extends State<Berita> {
     daftarBerita = BeritaService().getBerita();
   }
 
+  // List<BeritaModel> display_list = List.from(daftarBerita);
+
   String removeAllHtmlTags(String htmlText) {
     RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
     return htmlText.replaceAll(exp, '');
@@ -45,43 +47,24 @@ class _BeritaPageState extends State<Berita> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // const Text(
-            //   "Cari Berita",
-            //   style: TextStyle(
-            //       color: Colors.black,
-            //       fontSize: 14.0,
-            //       fontWeight: FontWeight.bold),
-            // ),
-            // const SizedBox(
-            //   height: 8.0,
-            // ),
-            TextField(
-              style: const TextStyle(color: Colors.black),
+            const TextField(
               decoration: InputDecoration(
-                filled: true,
-                fillColor: const Color.fromARGB(255, 204, 202, 202),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                  borderSide: BorderSide.none,
-                ),
-                hintText: "Cari Berita",
-                prefixIcon: const Icon(Icons.search),
-                prefixIconColor: Colors.blue.shade900,
-              ),
+                  labelText: 'Cari Berita', suffixIcon: Icon(Icons.search)),
             ),
             const SizedBox(
-              height: 20.0,
+              height: 20,
             ),
             Expanded(
               child: FutureBuilder<List<BeritaModel>>(
                 future: daftarBerita,
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {
+                    var data = snapshot.data;
                     return ListView.builder(
-                      itemCount: snapshot.data.length,
+                      itemCount: data?.length,
                       itemBuilder: (context, index) => ListTile(
                           title: Text(
-                            snapshot.data[index].title,
+                            data?[index].title,
                             style: const TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
@@ -89,7 +72,7 @@ class _BeritaPageState extends State<Berita> {
                           ),
                           subtitle: Text(
                             // removeAllHtmlTags(snapshot.data[index]['content']),
-                            "By ${snapshot.data[index].author}",
+                            "By ${data?[index].author}",
                             style: const TextStyle(
                               color: Colors.black,
                             ),
@@ -99,14 +82,13 @@ class _BeritaPageState extends State<Berita> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (c) => DetailBerita(
-                                        id: snapshot.data[index].id,
-                                        publishedAt:
-                                            snapshot.data[index].publishedAt,
-                                        title: snapshot.data[index].title,
-                                        content: snapshot.data[index].content,
-                                        image: snapshot.data[index].image,
-                                        author: snapshot.data[index].author,
-                                        tags: snapshot.data[index].tag)));
+                                        id: data?[index].id,
+                                        publishedAt: data?[index].publishedAt,
+                                        title: data?[index].title,
+                                        content: data?[index].content,
+                                        image: data?[index].image,
+                                        author: data?[index].author,
+                                        tags: data?[index].tag)));
                           },
                           // trailing: Text(
                           //   getCustomFormattedDateTime(
@@ -116,7 +98,7 @@ class _BeritaPageState extends State<Berita> {
                           // leading: Image.network("https://bpkad.ntbprov.go.id/" +
                           //     snapshot.data[index].image),
                           leading: Image.network(
-                              "https://bpkad.ntbprov.go.id/${snapshot.data[index].image}")),
+                              "https://bpkad.ntbprov.go.id/${data?[index].image}")),
                     );
                   } else {
                     return const Center(child: CircularProgressIndicator());

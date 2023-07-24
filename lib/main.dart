@@ -7,13 +7,14 @@ import 'package:instabpkad/home.dart';
 import 'package:instabpkad/nav-drawer.dart';
 import 'Pegawai/pegawai.dart';
 import 'Archive/archive.dart';
-import 'package:change_app_package_name/change_app_package_name.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -22,13 +23,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity),
-      home: MyHomePage(),
+      home: const MyHomePage(),
       initialRoute: '/',
       routes: {
-        '/pegawai': (context) => Pegawai(),
-        '/berita': (context) => Berita(),
+        '/pegawai': (context) => const Pegawai(),
+        '/berita': (context) => const Berita(),
         '/add_pegawai': (context) => AddPegawai(),
-        '/archive': (context) => Archive(),
+        '/archive': (context) => const Archive(),
         '/add_archive': (context) => AddArchive(),
       },
     );
@@ -36,13 +37,16 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   int selectedPage = 0;
-  final _pageOption = [Home(), Berita(), Archive(), Pegawai()];
+  final _pageOption = [const Home(), const Berita(), const Archive(), const Pegawai()];
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
         toolbarHeight: 45,
       ),
       // drawer: Sidebar(),
-      endDrawer: Sidebar(),
+      endDrawer: const Sidebar(),
       body: _pageOption[selectedPage],
       bottomNavigationBar: ConvexAppBar(
         items: const [

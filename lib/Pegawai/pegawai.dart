@@ -4,6 +4,8 @@ import 'package:instabpkad/model/pegawai/pegawai_model.dart';
 // import 'package:image_card/image_card.dart';
 
 class Pegawai extends StatefulWidget {
+  const Pegawai({super.key});
+
   @override
   // ignore: library_private_types_in_public_api
   _PegawaiState createState() => _PegawaiState();
@@ -62,7 +64,7 @@ class _PegawaiState extends State<Pegawai> {
                           fontSize: 14, fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      snapshot.data[index].nip,
+                      snapshot.data[index].nip ?? '-',
                       style: const TextStyle(
                           fontSize: 12,
                           fontStyle: FontStyle.italic,

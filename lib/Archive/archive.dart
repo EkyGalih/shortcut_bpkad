@@ -4,11 +4,14 @@ import 'package:instabpkad/api/archive_api.dart';
 import 'package:instabpkad/model/archive/archive_model.dart';
 
 void main() {
-  runApp(Archive());
+  runApp(const Archive());
 }
 
 class Archive extends StatefulWidget {
+  const Archive({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _ArchiveState createState() => _ArchiveState();
 }
 
