@@ -28,52 +28,62 @@ class _PegawaiState extends State<Pegawai> {
         future: daftarPegawai,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
-            return GridView.builder(
-              padding: const EdgeInsets.all(8),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-                childAspectRatio: 2 / 3,
-              ),
-              itemCount: snapshot.data.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Column(
-                  children: [
-                    Expanded(
-                      child: SizedBox(
-                        height: 800,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15.0),
-                          child: Material(
-                            child: Ink.image(
-                              image: NetworkImage(
-                                  "https://bpkad.ntbprov.go.id/uploads/pegawai/${snapshot.data[index].foto}"),
-                              fit: BoxFit.fill,
-                              child: InkWell(
-                                onTap: () {},
+            var data = snapshot.data;
+            return RefreshIndicator(
+              onRefresh: () async {
+                await Future.delayed(
+                  const Duration(seconds: 1),
+                );
+                data = PegawaiService().getPegawai();
+                setState(() {});
+              },
+              child: GridView.builder(
+                padding: const EdgeInsets.all(8),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  childAspectRatio: 2 / 3,
+                ),
+                itemCount: data?.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Column(
+                    children: [
+                      Expanded(
+                        child: SizedBox(
+                          height: 800,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15.0),
+                            child: Material(
+                              child: Ink.image(
+                                image: NetworkImage(
+                                    "https://bpkad.ntbprov.go.id/uploads/pegawai/${data?[index].foto}"),
+                                fit: BoxFit.fill,
+                                child: InkWell(
+                                  onTap: () {},
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    Text(
-                      snapshot.data[index].name,
-                      style: const TextStyle(
-                          fontSize: 14, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      snapshot.data[index].nip ?? '-',
-                      style: const TextStyle(
-                          fontSize: 12,
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.w400),
-                    ),
-                    const Divider(),
-                  ],
-                );
-              },
+                      Text(
+                        data?[index].name,
+                        style: const TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        data?[index].nip ?? '-',
+                        style: const TextStyle(
+                            fontSize: 12,
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.w400),
+                      ),
+                      const Divider(),
+                    ],
+                  );
+                },
+              ),
             );
           } else {
             return const Center(child: CircularProgressIndicator());

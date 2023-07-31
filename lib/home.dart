@@ -5,6 +5,7 @@ import 'package:instabpkad/api/berita_api.dart';
 import 'package:instabpkad/berita/detail_berita.dart';
 import 'package:instabpkad/model/berita/berita_model.dart';
 import 'package:intl/intl.dart';
+import 'package:readmore/readmore.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -15,40 +16,12 @@ class Home extends StatefulWidget {
 }
 
 class _HomePageState extends State<Home> {
-  late Future<List<BeritaModel>> carouselBerita;
-  late final PageController pageController;
-  int pageNo = 0;
-
-  Timer? caraouselTimer;
-
-  Timer getTimer() {
-    return Timer.periodic(const Duration(seconds: 3), (timer) {
-      if (pageNo == 4) {
-        pageNo = 0;
-      }
-      if (pageController.hasClients) {
-        pageController.animateToPage(
-          pageNo,
-          duration: const Duration(seconds: 1),
-          curve: Curves.easeInOutCirc,
-        );
-      }
-      pageNo++;
-    });
-  }
+  late Future<List<BeritaModel>> daftarBerita;
 
   @override
   void initState() {
     super.initState();
-    carouselBerita = BeritaService().getBerita();
-    pageController = PageController(initialPage: 0, viewportFraction: 0.85);
-    caraouselTimer = getTimer();
-  }
-
-  @override
-  void dispose() {
-    pageController.dispose();
-    super.dispose();
+    daftarBerita = BeritaService().getBerita();
   }
 
   String removeAllHtmlTags(String htmlText) {
@@ -67,109 +40,167 @@ class _HomePageState extends State<Home> {
   Widget build(BuildContext context) {
     // BeritaService().getBerita().then((value) => print("value: $value"));
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            TextButton(
-              onPressed: () {
-                // Navigator.pushNamed(context, '/berita');
+      resizeToAvoidBottomInset: false,
+      body: FutureBuilder<List<BeritaModel>>(
+        future: daftarBerita,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            var data = snapshot.data;
+            return RefreshIndicator(
+              onRefresh: () async {
+                await Future.delayed(
+                  const Duration(seconds: 1),
+                );
+                data = BeritaService().getBerita();
+                setState(() {});
               },
-              child: Container(
-                padding: const EdgeInsets.only(top: 12, bottom: 10),
-                child: Row(
-                  children: [
-                    const Align(alignment: Alignment.centerLeft),
-                    Container(
-                      margin: const EdgeInsets.only(left: 10.0),
-                      child: const Text(
-                        "Semua Berita",
-                        style: TextStyle(fontSize: 14.0),
-                      ),
-                    ),
-                  ],
+              color: Colors.white,
+              backgroundColor: Colors.blueAccent,
+              child: GridView.builder(
+                padding: const EdgeInsets.only(
+                  left: 8,
+                  right: 8,
+                  bottom: 1,
+                  top: 1,
                 ),
-              ),
-            ),
-            SizedBox(
-              height: 200,
-              child: FutureBuilder<List<BeritaModel>>(
-                  future: carouselBerita,
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    return PageView.builder(
-                      controller: pageController,
-                      onPageChanged: (idx) {
-                        pageNo = idx;
-                        setState(() {});
-                      },
-                      itemBuilder: (context, index) {
-                        return AnimatedBuilder(
-                          animation: pageController,
-                          builder: (ctx, child) {
-                            return child!;
-                          },
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (c) => DetailBerita(
-                                          id: snapshot.data[index].id,
-                                          publishedAt:
-                                              snapshot.data[index].publishedAt,
-                                          title: snapshot.data[index].title,
-                                          content: snapshot.data[index].content,
-                                          image: snapshot.data[index].image,
-                                          author: snapshot.data[index].author,
-                                          tags: snapshot.data[index].tag)));
-                              // ScaffoldMessenger.of(context).showSnackBar(
-                              //   SnackBar(
-                              //     content:
-                              //         Text("${snapshot.data[index].title}"),
-                              //   ),
-                              // );
-                            },
-                            // onPanDown: (d) {
-                            //   caraouselTimer?.cancel();
-                            //   caraouselTimer = null;
-                            // },
-                            // onPanCancel: () {
-                            //   caraouselTimer = getTimer();
-                            // },
-                            child: Container(
-                              margin: const EdgeInsets.only(
-                                  right: 8, left: 8, top: 1, bottom: 5),
-                              // height: 180,
-                              child: Image.network(
-                                "https://bpkad.ntbprov.go.id/uploads/berita/berita-6820d13b719c973b854eb810e9e00a7f.jpeg",
-                                fit: BoxFit.fill,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 1,
+                  crossAxisSpacing: 5,
+                  mainAxisSpacing: 1,
+                  childAspectRatio: 8 / 12,
+                ),
+                itemCount: data?.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return SingleChildScrollView(
+                    child: Card(
+                      clipBehavior: Clip.antiAlias,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(2)),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(4),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 50,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: NetworkImage(
+                                              "https://bpkad.ntbprov.go.id/${data?[index].avatar}")),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(48)),
+                                      color: Colors.blue,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(data?[index].author),
+                                  ),
+                                  Icon(
+                                    Icons.circle,
+                                    size: 5,
+                                    color: Colors.grey.shade400,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(getCustomFormattedDateTime(
+                                        data?[index].publishedAt,
+                                        'dd MM yyyy')),
+                                  )
+                                ],
                               ),
                             ),
                           ),
-                        );
-                      },
-                      itemCount: 5,
-                    );
-                  }),
-            ),
-            const SizedBox(height: 12.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                5,
-                (index) => Container(
-                  margin: const EdgeInsets.all(4.0),
-                  child: Icon(
-                    Icons.circle,
-                    size: 12.0,
-                    color: pageNo == index
-                        ? Colors.indigoAccent
-                        : Colors.grey.shade300,
-                  ),
-                ),
+                          Stack(
+                            alignment: Alignment.topCenter,
+                            children: [
+                              Ink.image(
+                                image: NetworkImage(
+                                    "https://bpkad.ntbprov.go.id/${data[index].image}"),
+                                height: 300,
+                                fit: BoxFit.fill,
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (c) => DetailBerita(
+                                            id: data?[index].id,
+                                            publishedAt:
+                                                data?[index].publishedAt,
+                                            title: data?[index].title,
+                                            content: data?[index].content,
+                                            image: data?[index].image,
+                                            author: data?[index].author,
+                                            tags: data?[index].tag),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 4),
+                          ButtonBar(
+                            alignment: MainAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(Icons.heart_broken),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(
+                                        Icons.insert_comment_outlined),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(Icons.send_outlined),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          const Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 8, bottom: 4),
+                              child: Text("64.503 suka"),
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Padding(
+                            padding:
+                                const EdgeInsets.all(6).copyWith(bottom: 5),
+                            child: ReadMoreText(
+                              removeAllHtmlTags(data[index].content),
+                              trimLines: 2,
+                              colorClickableText: Colors.blue,
+                              trimMode: TrimMode.Line,
+                              trimCollapsedText: " Selengkapnya",
+                              trimExpandedText: " Show less",
+                              style: const TextStyle(color: Colors.black),
+                              moreStyle: const TextStyle(fontSize: 14),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
               ),
-            ),
-          ],
-        ),
+            );
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        },
       ),
     );
   }

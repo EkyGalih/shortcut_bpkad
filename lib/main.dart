@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Insta BPKAD",
+      title: "Instan's",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           primarySwatch: Colors.blue,
@@ -46,14 +46,19 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int selectedPage = 0;
-  final _pageOption = [const Home(), const Berita(), const Archive(), const Pegawai()];
+  final _pageOption = [
+    const Home(),
+    const Berita(),
+    const Archive(),
+    const Pegawai()
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'instabpkad',
+          "Instans's",
           style: TextStyle(
             fontFamily: 'OoohBaby',
             fontSize: 30,

@@ -2,7 +2,7 @@ import 'package:http/http.dart' show Client;
 import 'package:instabpkad/model/berita/berita_model.dart';
 
 class BeritaService {
-  final String baseUrl = "https://bpkad.ntbprov.go.id/api/berita";
+  final String baseUrl = "https://bpkad.ntbprov.go.id/api/berita?page=1";
   Client client = Client();
 
   Future<List<BeritaModel>> getBerita() async {

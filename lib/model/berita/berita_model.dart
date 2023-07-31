@@ -5,6 +5,7 @@ import 'dart:convert';
 class BeritaModel {
   final id;
   final image;
+  final avatar;
   final title;
   final content;
   final author;
@@ -14,6 +15,7 @@ class BeritaModel {
   BeritaModel({
     required this.id,
     required this.image,
+    required this.avatar,
     required this.title,
     required this.content,
     required this.author,
@@ -25,6 +27,7 @@ class BeritaModel {
     return BeritaModel(
       id: map['id'],
       image: map['foto_berita'],
+      avatar: map['avatar'],
       title: map['title'],
       content: map['content'],
       author: map['author'],
@@ -37,6 +40,7 @@ class BeritaModel {
     return {
       "id": id,
       "image": image,
+      "avatar": avatar,
       "title": title,
       "content": content,
       "author": author,
@@ -47,12 +51,12 @@ class BeritaModel {
 
   @override
   String toString() {
-    return 'BeritaModel{id: $id, image: $image, title: $title, content: $content, author: $author, publihedAt: $publishedAt, tag: $tag}';
+    return 'BeritaModel{id: $id, image: $image, avatar: $avatar, title: $title, content: $content, author: $author, publihedAt: $publishedAt, tag: $tag}';
   }
 }
 
 List<BeritaModel> beritaFromJson(String jsonData) {
-  final data = json.decode(jsonData)['data'];
+  final data = json.decode(jsonData)['data']['data'];
   return List<BeritaModel>.from(
       data.map((berita) => BeritaModel.fromJson(berita)).toList());
 }
