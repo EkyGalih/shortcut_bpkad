@@ -85,8 +85,8 @@ class _HomePageState extends State<Home> {
                               child: Row(
                                 children: [
                                   Container(
-                                    width: 50,
-                                    height: 50,
+                                    width: 35,
+                                    height: 35,
                                     decoration: BoxDecoration(
                                       image: DecorationImage(
                                           fit: BoxFit.cover,
@@ -122,7 +122,7 @@ class _HomePageState extends State<Home> {
                               Ink.image(
                                 image: NetworkImage(
                                     "https://bpkad.ntbprov.go.id/${data[index].image}"),
-                                height: 300,
+                                height: 250,
                                 fit: BoxFit.fill,
                                 child: InkWell(
                                   onTap: () {
@@ -189,6 +189,42 @@ class _HomePageState extends State<Home> {
                               style: const TextStyle(color: Colors.black),
                               moreStyle: const TextStyle(fontSize: 14),
                             ),
+                          ),
+                          const Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 6),
+                              child: Text("Lihat Semua 50 Komentar"),
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.all(6),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: SizedBox(
+                                    width: 270,
+                                    child: TextField(
+                                      decoration: InputDecoration(
+                                        border: UnderlineInputBorder(),
+                                        hintText: 'Tambahkan Komentar',
+                                        contentPadding:
+                                            EdgeInsetsDirectional.symmetric(
+                                          vertical: 2,
+                                        ),
+                                      ),
+                                      maxLines: 2,
+                                      minLines: 1,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () {},
+                                icon: const Icon(Icons.send),
+                              )
+                            ],
                           ),
                         ],
                       ),
