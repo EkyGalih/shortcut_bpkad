@@ -1,9 +1,9 @@
 // ignore_for_file: avoid_print
 
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:instabpkad/api/archive_api.dart';
+import 'package:flutter/rendering.dart';
+// import 'package:instabpkad/api/archive_api.dart';
 import 'package:url_launcher/url_launcher.dart';
 // import 'package:instabpkad/model/archive/archive_model.dart';
 import 'package:http/http.dart' as http;
@@ -25,14 +25,42 @@ class _ArchiveState extends State<Archive> {
   bool isLoadingMore = false;
   List archive = [];
   int page = 1;
+  late double scrollMark;
 
   @override
   void initState() {
     super.initState();
     scrollController.addListener(_scrollListener);
     fetchArchive();
+
+    // fab
+    fab = FloatingActionButton(
+      child: const Icon(Icons.arrow_upward),
+      onPressed: () {
+        scrollController.animateTo(
+          0.0,
+          curve: Curves.ease,
+          duration: const Duration(milliseconds: 500),
+        );
+      },
+    );
+
+    // scroll listener for FAB
+    scrollController.addListener(() {
+      if (scrollController.position.userScrollDirection ==
+          ScrollDirection.forward) {
+        setState(() {
+          reversing = true;
+        });
+      } else {
+        setState(() {
+          reversing = false;
+        });
+      }
+    });
   }
 
+  // get data
   Future<void> fetchArchive() async {
     final url = 'https://bpkad.ntbprov.go.id/api/kip?page=$page';
     print(url);
@@ -48,6 +76,7 @@ class _ArchiveState extends State<Archive> {
     }
   }
 
+  // scroll load function
   Future<void> _scrollListener() async {
     if (isLoadingMore) return;
     if (scrollController.position.pixels ==
@@ -63,9 +92,21 @@ class _ArchiveState extends State<Archive> {
     }
   }
 
+  // back to top
+  bool reversing = false;
+  late FloatingActionButton fab;
+
+  FloatingActionButton? getFab() {
+    if (reversing && scrollController.position.pixels > 0.0) {
+      return fab;
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: getFab(),
       body: RefreshIndicator(
         onRefresh: () async {
           await Future.delayed(
@@ -144,4 +185,11 @@ class _ArchiveState extends State<Archive> {
     //   child: const Icon(Icons.add),
     // ),
   }
+}
+
+double abs(double value) {
+  if (value < 0.0) {
+    return -value;
+  }
+  return value;
 }
