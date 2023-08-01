@@ -40,6 +40,7 @@ dependencies:
   flutter_native_splash: ^2.3.1
   readmore: ^2.2.0
   url_launcher: ^6.1.12
+  get_time_ago: ^1.2.4
 
 flutter_native_splash:
   android: true
@@ -76,12 +77,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  assets:
-    - assets/images/male.jpg
-    - assets/images/newsfeed.png
-    - assets/images/splash.png
-    - assets/images/archive.png
-  #   - images/a_dot_ham.jpeg
+  # assets:
+    # - assets/images/male.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

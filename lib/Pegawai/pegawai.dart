@@ -4,10 +4,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:instabpkad/Pegawai/dettail_pegawai.dart';
-import 'package:instabpkad/api/pegawai_api.dart';
-import 'package:instabpkad/model/pegawai/pegawai_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:instabpkad/Pegawai/dettail_pegawai.dart';
 // import 'package:image_card/image_card.dart';
 
 class Pegawai extends StatefulWidget {
@@ -144,7 +142,7 @@ class _PegawaiState extends State<Pegawai> {
                                 ? NetworkImage(
                                     "https://bpkad.ntbprov.go.id/uploads/pegawai/$foto")
                                 : const NetworkImage(
-                                    'https://bpkad.ntbprov.go.id/uploads/pegawai/e78ab5edc12d000ee2242204e6a744e1.jpg'),
+                                    'https://bpkad.ntbprov.go.id/upload/mobile/male.jpg'),
                             fit: BoxFit.fill,
                             child: InkWell(
                               onTap: () {

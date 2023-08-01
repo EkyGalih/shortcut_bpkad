@@ -2,14 +2,14 @@
 
 import 'dart:async';
 import 'dart:convert';
+
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter/material.dart';
-import 'package:instabpkad/api/berita_api.dart';
 import 'package:instabpkad/berita/detail_berita.dart';
-import 'package:instabpkad/model/berita/berita_model.dart';
 import 'package:intl/intl.dart';
 import 'package:readmore/readmore.dart';
+import 'package:get_time_ago/get_time_ago.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -193,8 +193,13 @@ class _HomePageState extends State<Home> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Text(getCustomFormattedDateTime(
-                                    publishedAt, 'dd MM yyyy')),
+                                child: Text(
+                                  GetTimeAgo.parse(
+                                    DateTime.parse(publishedAt),
+                                    pattern: "dd-MM-yyyy hh:mm aa",
+                                    locale: 'id',
+                                  ),
+                                ),
                               )
                             ],
                           ),
@@ -204,8 +209,11 @@ class _HomePageState extends State<Home> {
                         alignment: Alignment.topCenter,
                         children: [
                           Ink.image(
-                            image: NetworkImage(
-                                "https://bpkad.ntbprov.go.id/$image"),
+                            image: image != null
+                                ? NetworkImage(
+                                    "https://bpkad.ntbprov.go.id/$image")
+                                : const NetworkImage(
+                                    'https://bpkad.ntbprov.go.id/upload/mobile/newsfeed.png'),
                             height: 250,
                             fit: BoxFit.fill,
                             child: InkWell(

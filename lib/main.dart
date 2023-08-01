@@ -5,8 +5,9 @@ import 'package:instabpkad/Pegawai/add_pegawai.dart';
 import 'package:instabpkad/berita/berita.dart';
 import 'package:instabpkad/home.dart';
 import 'package:instabpkad/nav-drawer.dart';
-import 'Pegawai/pegawai.dart';
+
 import 'Archive/archive.dart';
+import 'Pegawai/pegawai.dart';
 
 void main() {
   runApp(const MyApp());

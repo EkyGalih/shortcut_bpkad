@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:instabpkad/api/berita_api.dart';
-import 'package:intl/intl.dart';
 import 'package:instabpkad/berita/detail_berita.dart';
 import 'package:instabpkad/model/berita/berita_model.dart';
+import 'package:intl/intl.dart';
 
 class Berita extends StatefulWidget {
   const Berita({super.key});

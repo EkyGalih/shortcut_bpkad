@@ -1,12 +1,13 @@
 // ignore_for_file: avoid_print
 
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-// import 'package:instabpkad/api/archive_api.dart';
-import 'package:url_launcher/url_launcher.dart';
 // import 'package:instabpkad/model/archive/archive_model.dart';
 import 'package:http/http.dart' as http;
+// import 'package:instabpkad/api/archive_api.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(const Archive());
@@ -133,7 +134,8 @@ class _ArchiveState extends State<Archive> {
                       width: 292,
                       child: ListTile(
                         leading: const Image(
-                          image: AssetImage('assets/images/archive.png'),
+                          image: NetworkImage(
+                              'https://bpkad.ntbprov.go.id/upload/mobile/archive.png'),
                           height: 35,
                           width: 35,
                         ),
