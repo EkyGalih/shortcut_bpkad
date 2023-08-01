@@ -2,7 +2,7 @@ import 'package:http/http.dart' show Client;
 import 'package:instabpkad/model/pegawai/pegawai_model.dart';
 
 class PegawaiService {
-  final String baseUrl = "https://bpkad.ntbprov.go.id/api/pegawai";
+  final String baseUrl = "https://bpkad.ntbprov.go.id/api/pegawai?page=1";
   Client client = Client();
 
   Future<List<PegawaiModel>> getPegawai() async {

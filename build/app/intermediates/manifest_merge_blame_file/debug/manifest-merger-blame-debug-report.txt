@@ -16,58 +16,94 @@
 15-->D:\Project\flutter\pegawai\android\app\src\debug\AndroidManifest.xml:6:5-66
 15-->D:\Project\flutter\pegawai\android\app\src\debug\AndroidManifest.xml:6:22-64
 16
-17    <application
-18        android:name="android.app.Application"
-19        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-19-->[androidx.core:core:1.6.0] C:\Users\progb\.gradle\caches\transforms-3\7e9df2ac2213a6bd3cef0f2f27870d79\transformed\core-1.6.0\AndroidManifest.xml:24:18-86
-20        android:debuggable="true"
-21        android:icon="@mipmap/ic_launcher"
-22        android:label="insta bpkad" >
-23        <activity
-24            android:name="com.example.insta_bpkad.MainActivity"
-25            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-26            android:exported="true"
-27            android:hardwareAccelerated="true"
-28            android:launchMode="singleTop"
-29            android:theme="@style/LaunchTheme"
-30            android:windowSoftInputMode="adjustResize" >
-31
-32            <!--
-33                 Specifies an Android theme to apply to this Activity as soon as
-34                 the Android process has started. This theme is visible to the user
-35                 while the Flutter UI initializes. After that, this theme continues
-36                 to determine the Window background behind the Flutter UI.
-37            -->
-38            <meta-data
-39                android:name="io.flutter.embedding.android.NormalTheme"
-40                android:resource="@style/NormalTheme" />
-41
-42            <intent-filter>
-43                <action android:name="android.intent.action.MAIN" />
-44
-45                <category android:name="android.intent.category.LAUNCHER" />
-46            </intent-filter>
-47        </activity>
-48        <!--
-49             Don't delete the meta-data below.
-50             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
-51        -->
-52        <meta-data
-53            android:name="flutterEmbedding"
-54            android:value="2" />
-55
-56        <uses-library
-56-->[androidx.window:window:1.0.0-beta04] C:\Users\progb\.gradle\caches\transforms-3\25cee5f028ac2a6b79fd6278ff5b59e2\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:25:9-27:40
-57            android:name="androidx.window.extensions"
-57-->[androidx.window:window:1.0.0-beta04] C:\Users\progb\.gradle\caches\transforms-3\25cee5f028ac2a6b79fd6278ff5b59e2\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:26:13-54
-58            android:required="false" />
-58-->[androidx.window:window:1.0.0-beta04] C:\Users\progb\.gradle\caches\transforms-3\25cee5f028ac2a6b79fd6278ff5b59e2\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:27:13-37
-59        <uses-library
-59-->[androidx.window:window:1.0.0-beta04] C:\Users\progb\.gradle\caches\transforms-3\25cee5f028ac2a6b79fd6278ff5b59e2\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:28:9-30:40
-60            android:name="androidx.window.sidecar"
-60-->[androidx.window:window:1.0.0-beta04] C:\Users\progb\.gradle\caches\transforms-3\25cee5f028ac2a6b79fd6278ff5b59e2\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:29:13-51
-61            android:required="false" />
-61-->[androidx.window:window:1.0.0-beta04] C:\Users\progb\.gradle\caches\transforms-3\25cee5f028ac2a6b79fd6278ff5b59e2\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:30:13-37
-62    </application>
-63
-64</manifest>
+17    <queries>
+17-->D:\Project\flutter\pegawai\android\app\src\main\AndroidManifest.xml:2:5-13:15
+18
+19        <!-- If your app checks for SMS support -->
+20        <intent>
+20-->D:\Project\flutter\pegawai\android\app\src\main\AndroidManifest.xml:4:5-7:14
+21            <action android:name="android.intent.action.VIEW" />
+21-->D:\Project\flutter\pegawai\android\app\src\main\AndroidManifest.xml:5:9-61
+21-->D:\Project\flutter\pegawai\android\app\src\main\AndroidManifest.xml:5:17-58
+22
+23            <data android:scheme="http" />
+23-->D:\Project\flutter\pegawai\android\app\src\main\AndroidManifest.xml:6:9-39
+23-->D:\Project\flutter\pegawai\android\app\src\main\AndroidManifest.xml:6:15-36
+24        </intent>
+25        <!-- If your app checks for call support -->
+26        <intent>
+26-->D:\Project\flutter\pegawai\android\app\src\main\AndroidManifest.xml:9:5-12:14
+27            <action android:name="android.intent.action.VIEW" />
+27-->D:\Project\flutter\pegawai\android\app\src\main\AndroidManifest.xml:5:9-61
+27-->D:\Project\flutter\pegawai\android\app\src\main\AndroidManifest.xml:5:17-58
+28
+29            <data android:scheme="https" />
+29-->D:\Project\flutter\pegawai\android\app\src\main\AndroidManifest.xml:6:9-39
+29-->D:\Project\flutter\pegawai\android\app\src\main\AndroidManifest.xml:6:15-36
+30        </intent>
+31    </queries>
+32
+33    <application
+34        android:name="android.app.Application"
+35        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+35-->[androidx.core:core:1.6.0] C:\Users\progb\.gradle\caches\transforms-3\7e9df2ac2213a6bd3cef0f2f27870d79\transformed\core-1.6.0\AndroidManifest.xml:24:18-86
+36        android:debuggable="true"
+37        android:icon="@mipmap/ic_launcher"
+38        android:label="insta bpkad" >
+39        <activity
+40            android:name="com.example.insta_bpkad.MainActivity"
+41            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+42            android:exported="true"
+43            android:hardwareAccelerated="true"
+44            android:launchMode="singleTop"
+45            android:theme="@style/LaunchTheme"
+46            android:windowSoftInputMode="adjustResize" >
+47
+48            <!--
+49                 Specifies an Android theme to apply to this Activity as soon as
+50                 the Android process has started. This theme is visible to the user
+51                 while the Flutter UI initializes. After that, this theme continues
+52                 to determine the Window background behind the Flutter UI.
+53            -->
+54            <meta-data
+55                android:name="io.flutter.embedding.android.NormalTheme"
+56                android:resource="@style/NormalTheme" />
+57
+58            <intent-filter>
+59                <action android:name="android.intent.action.MAIN" />
+60
+61                <category android:name="android.intent.category.LAUNCHER" />
+62            </intent-filter>
+63        </activity>
+64        <!--
+65             Don't delete the meta-data below.
+66             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+67        -->
+68        <meta-data
+69            android:name="flutterEmbedding"
+70            android:value="2" />
+71
+72        <activity
+72-->[:url_launcher_android] D:\Project\flutter\pegawai\build\url_launcher_android\intermediates\merged_manifest\debug\AndroidManifest.xml:10:9-13:74
+73            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
+73-->[:url_launcher_android] D:\Project\flutter\pegawai\build\url_launcher_android\intermediates\merged_manifest\debug\AndroidManifest.xml:11:13-74
+74            android:exported="false"
+74-->[:url_launcher_android] D:\Project\flutter\pegawai\build\url_launcher_android\intermediates\merged_manifest\debug\AndroidManifest.xml:12:13-37
+75            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+75-->[:url_launcher_android] D:\Project\flutter\pegawai\build\url_launcher_android\intermediates\merged_manifest\debug\AndroidManifest.xml:13:13-71
+76
+77        <uses-library
+77-->[androidx.window:window:1.0.0-beta04] C:\Users\progb\.gradle\caches\transforms-3\25cee5f028ac2a6b79fd6278ff5b59e2\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:25:9-27:40
+78            android:name="androidx.window.extensions"
+78-->[androidx.window:window:1.0.0-beta04] C:\Users\progb\.gradle\caches\transforms-3\25cee5f028ac2a6b79fd6278ff5b59e2\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:26:13-54
+79            android:required="false" />
+79-->[androidx.window:window:1.0.0-beta04] C:\Users\progb\.gradle\caches\transforms-3\25cee5f028ac2a6b79fd6278ff5b59e2\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:27:13-37
+80        <uses-library
+80-->[androidx.window:window:1.0.0-beta04] C:\Users\progb\.gradle\caches\transforms-3\25cee5f028ac2a6b79fd6278ff5b59e2\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:28:9-30:40
+81            android:name="androidx.window.sidecar"
+81-->[androidx.window:window:1.0.0-beta04] C:\Users\progb\.gradle\caches\transforms-3\25cee5f028ac2a6b79fd6278ff5b59e2\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:29:13-51
+82            android:required="false" />
+82-->[androidx.window:window:1.0.0-beta04] C:\Users\progb\.gradle\caches\transforms-3\25cee5f028ac2a6b79fd6278ff5b59e2\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:30:13-37
+83    </application>
+84
+85</manifest>

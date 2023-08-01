@@ -2,7 +2,7 @@ import 'package:http/http.dart' show Client;
 import 'package:instabpkad/model/archive/archive_model.dart';
 
 class ArchiveService {
-  final String baseUrl = "https://bpkad.ntbprov.go.id/api/kip";
+  final String baseUrl = "https://bpkad.ntbprov.go.id/api/kip?page=1";
   Client client = Client();
 
   Future<List<ArchiveModel>> getArchive() async {

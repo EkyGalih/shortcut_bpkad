@@ -48,7 +48,7 @@ class ArchiveModel {
 }
 
 List<ArchiveModel> archiveFromjson(String jsonDataArchive) {
-  final dataArchive = json.decode(jsonDataArchive)['data'];
+  final dataArchive = json.decode(jsonDataArchive)['data']['data'];
   return List<ArchiveModel>.from(
       dataArchive.map((archive) => ArchiveModel.fromJson(archive)).toList());
 }

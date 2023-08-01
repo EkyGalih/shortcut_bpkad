@@ -64,6 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
             fontSize: 30,
           ),
         ),
+        backgroundColor: Colors.blueAccent.shade400,
         toolbarHeight: 45,
       ),
       // drawer: Sidebar(),
@@ -76,6 +77,8 @@ class _MyHomePageState extends State<MyHomePage> {
           TabItem(icon: Icons.archive, title: "Arsip"),
           TabItem(icon: Icons.people, title: 'Pegawai')
         ],
+        backgroundColor: Colors.blueAccent.shade400,
+        height: 45,
         initialActiveIndex: selectedPage,
         onTap: (int index) {
           setState(() {

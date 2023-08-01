@@ -40,7 +40,7 @@ class PegawaiModel {
 }
 
 List<PegawaiModel> pegawaiFromJson(String jsonData) {
-  final data = json.decode(jsonData)['data'];
+  final data = json.decode(jsonData)['data']['data'];
   return List<PegawaiModel>.from(
       data.map((pegawai) => PegawaiModel.fromJson(pegawai)).toList());
 }

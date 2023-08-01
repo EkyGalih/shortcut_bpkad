@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instabpkad/Pegawai/dettail_pegawai.dart';
 import 'package:instabpkad/api/pegawai_api.dart';
 import 'package:instabpkad/model/pegawai/pegawai_model.dart';
 // import 'package:image_card/image_card.dart';
@@ -60,24 +61,46 @@ class _PegawaiState extends State<Pegawai> {
                                     "https://bpkad.ntbprov.go.id/uploads/pegawai/${data?[index].foto}"),
                                 fit: BoxFit.fill,
                                 child: InkWell(
-                                  onTap: () {},
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (c) => DetailPegawai(
+                                          name: data?[index].name,
+                                          nip: data?[index].nip,
+                                          jabatan: data?[index].jabatan,
+                                          foto: data?[index].foto,
+                                        ),
+                                      ),
+                                    );
+                                  },
                                 ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                      Text(
-                        data?[index].name,
-                        style: const TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        data?[index].nip ?? '-',
-                        style: const TextStyle(
-                            fontSize: 12,
-                            fontStyle: FontStyle.italic,
-                            fontWeight: FontWeight.w400),
+                      Column(
+                        children: [
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              data?[index].name,
+                              style: const TextStyle(
+                                  fontSize: 12, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              data?[index].nip ?? '------',
+                              style: const TextStyle(
+                                  fontSize: 12,
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.w400),
+                            ),
+                          ),
+                        ],
                       ),
                       const Divider(),
                     ],
