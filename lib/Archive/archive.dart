@@ -63,7 +63,6 @@ class _ArchiveState extends State<Archive> {
   // get data
   Future<void> fetchArchive() async {
     final url = 'https://bpkad.ntbprov.go.id/api/kip?page=$page';
-    print(url);
     final uri = Uri.parse(url);
     final response = await http.get(uri);
     if (response.statusCode == 200) {
@@ -121,11 +120,11 @@ class _ArchiveState extends State<Archive> {
           itemCount: isLoadingMore ? archive.length + 1 : archive.length,
           itemBuilder: (BuildContext context, int index) {
             if (index < archive.length) {
-              final berita = archive[index];
-              final nama = berita['nama_informasi'];
-              final jenis = berita['jenis_informasi'];
-              final tahun = berita['tahun'];
-              final files = berita['files'];
+              final kip = archive[index];
+              final nama = kip['nama_informasi'];
+              final jenis = kip['jenis_informasi'];
+              final tahun = kip['tahun'];
+              final files = kip['files'];
               return Row(
                 children: [
                   Align(
