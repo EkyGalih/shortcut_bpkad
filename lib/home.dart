@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
 import 'package:instabpkad/berita/detail_berita.dart';
-import 'package:intl/intl.dart';
 import 'package:readmore/readmore.dart';
 import 'package:get_time_ago/get_time_ago.dart';
 
@@ -104,13 +103,6 @@ class _HomePageState extends State<Home> {
   String removeAllHtmlTags(String htmlText) {
     RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
     return htmlText.replaceAll(exp, '');
-  }
-
-  // convert timestampt to date
-  getCustomFormattedDateTime(String givenDateTime, String dateFormat) {
-    // dateFormat = 'MM/dd/yy';
-    final DateTime docDateTime = DateTime.parse(givenDateTime);
-    return DateFormat(dateFormat).format(docDateTime);
   }
 
   @override

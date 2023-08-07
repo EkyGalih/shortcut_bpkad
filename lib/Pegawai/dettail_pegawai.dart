@@ -28,7 +28,7 @@ class DetailPegawai extends StatelessWidget {
           children: <Widget>[
             foto != null
                 ? Image.network(
-                    'https://bpkad.ntbprov.go.id/uploads/pegawai/${foto}',
+                    'https://bpkad.ntbprov.go.id/uploads/pegawai/$foto',
                     fit: BoxFit.fill,
                   )
                 : SizedBox(

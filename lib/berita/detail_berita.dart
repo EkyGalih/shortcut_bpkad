@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:get_time_ago/get_time_ago.dart';
 
 class DetailBerita extends StatelessWidget {
   final id;
@@ -28,13 +28,6 @@ class DetailBerita extends StatelessWidget {
     return htmlText.replaceAll(exp, '');
   }
 
-  // convert timestampt to date
-  getCustomFormattedDateTime(String givenDateTime, String dateFormat) {
-    // dateFormat = 'MM/dd/yy';
-    final DateTime docDateTime = DateTime.parse(givenDateTime);
-    return DateFormat(dateFormat).format(docDateTime);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +42,8 @@ class DetailBerita extends StatelessWidget {
                 ? Image.network("https://bpkad.ntbprov.go.id/$image")
                 : SizedBox(
                     height: 250,
-                    child: Image.asset('assets/images/newsfeed.png'),
+                    child: Image.network(
+                        'https://bpkad.ntbprov.go.id/upload/mobile/newsfeed.png'),
                   ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -63,7 +57,11 @@ class DetailBerita extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    getCustomFormattedDateTime(publishedAt, 'MM/dd/yyyy'),
+                    GetTimeAgo.parse(
+                      DateTime.parse(publishedAt),
+                      pattern: "dd-MM-yyyy hh:mm aa",
+                      locale: 'id',
+                    ),
                     style: const TextStyle(fontStyle: FontStyle.italic),
                   ),
                   Text('By  $author',
